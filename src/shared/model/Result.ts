@@ -1,4 +1,4 @@
 export class Result {
-  constructor(public amount : number) {
+  constructor(public success : boolean, public amount : number) {
   }
 }

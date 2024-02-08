@@ -1,4 +1,4 @@
 export class EmiArguments {
-  constructor(loanValue: number, yearlyInterestRate: number, loanTerm: number) {
+  constructor(public loanValue: number, public yearlyInterestRate: number, public loanTerm: number) {
   }
 }

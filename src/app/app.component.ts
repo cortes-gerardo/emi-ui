@@ -27,11 +27,21 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.emiService.getHistory().subscribe((data) => {
       this.items = data;
-    })
+    });
   }
 
   calculate() {
-    new EmiArguments(+this.loanValueText, +this.yearlyInterestRateText, +this.loanTermText)
+    let loanValue = Number(this.loanValueText);
+    let yearlyInterestRate = Number(this.yearlyInterestRateText);
+    let loanTerm = Number(this.loanTermText);
+    console.log(loanValue);
+
+    let emiArguments = new EmiArguments(loanValue, yearlyInterestRate, loanTerm);
+    console.log(emiArguments);
+
+    this.emiService.calculate(emiArguments).subscribe((data) => {
+      console.log(data);
+    });
   }
 
 }
