@@ -5,7 +5,6 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from '@angular/common/http';
 import {EmiService} from "./emi.service";
 import {EmiArguments} from "../shared/model/EmiArguments";
-import {Result} from "../shared/model/Result";
 
 @Component({
   selector: 'app-root',
@@ -30,7 +29,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  calculate() {
+  onSubmit() {
     let loanValue = Number(this.loanValueText);
     let yearlyInterestRate = Number(this.yearlyInterestRateText);
     let loanTerm = Number(this.loanTermText);
