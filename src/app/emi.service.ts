@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, of} from "rxjs";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {catchError, Observable, of, throwError} from "rxjs";
 import {EmiArguments} from "../shared/model/EmiArguments";
 import {Result} from "../shared/model/Result";
 
@@ -16,20 +16,23 @@ export class EmiService {
   calculate(emiArguments : EmiArguments) {
     return this.http
       .post<Result>(`${this.url}/v1/calculator/emi`, emiArguments)
-      .pipe(catchError(this.handleError<number[]>('calculate', [])));
+      .pipe(catchError(this.handleError));
   }
 
   getHistory() {
     return this.http
       .get<number[]>(`${this.url}/v1/calculator/history`)
-      .pipe(catchError(this.handleError<number[]>('getHistory', [])));
+      .pipe(catchError(this.handleError));
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(`${operation} failed: ${error.message}`);
-
-      return of(result as T);
-    };
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Something bad happened; please try again later.';
+    if (error.status === 0) {
+      console.error('An client-side error occurred:', error.error);
+    } else {
+      console.error(`Backend returned code ${error.status}, body was: `, error.error);
+      errorMessage = error.error.message;
+    }
+    return throwError(() => new Error(errorMessage));
   }
 }

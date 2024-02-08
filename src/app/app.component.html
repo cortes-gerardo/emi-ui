@@ -6,6 +6,11 @@
       <h1>
         {{ title }}
       </h1>
+
+      <div *ngIf="alertMessage.length > 0" class="alert alert-danger" role="alert">
+        {{ alertMessage }}
+      </div>
+
     </div>
   </div>
 
@@ -43,8 +48,8 @@
             *ngIf="loanValueInput.invalid && (loanValueInput.dirty || loanValueInput.touched)"
             class="alert"
           >
-            <div *ngIf="loanValueInput.errors?.['required']">Loan Value is required.</div>
-            <div *ngIf="loanValueInput.errors?.['pattern']">This is not a valid number</div>
+            <div class="form-text text-muted" *ngIf="loanValueInput.errors?.['required']">Loan Value is required.</div>
+            <div class="form-text text-muted" *ngIf="loanValueInput.errors?.['pattern']">This is not a valid number</div>
           </div>
           <div class="invalid-feedback">Example invalid feedback text</div>
         </div>
@@ -54,13 +59,14 @@
           <label for="inputYearlyInterestRate">Yearly Interest Rate</label>
           <input class="form-control" id="inputYearlyInterestRate" name="yearlyInterestRateText"
                  placeholder="Percentage from 0-100 %" aria-describedby="yearlyInterestRateHelp"
-                 [(ngModel)]="yearlyInterestRateText" #yearlyInterestRateInput="ngModel" required pattern="^([0-9][0-9]{0,1}|100)(\.\d{1,2})?$">
+                 [(ngModel)]="yearlyInterestRateText" #yearlyInterestRateInput="ngModel" required
+                 pattern="^([0-9][0-9]{0,1}|100)(\.\d{1,2})?$">
           <div
             *ngIf="yearlyInterestRateInput.invalid && (yearlyInterestRateInput.dirty || yearlyInterestRateInput.touched)"
             class="alert"
           >
-            <div *ngIf="yearlyInterestRateInput.errors?.['required']">Name is required.</div>
-            <div *ngIf="yearlyInterestRateInput.errors?.['pattern']">The value should be between 0 and 100</div>
+            <div class="form-text text-muted" *ngIf="yearlyInterestRateInput.errors?.['required']">Name is required.</div>
+            <div class="form-text text-muted" *ngIf="yearlyInterestRateInput.errors?.['pattern']">The value should be between 0 and 100</div>
           </div>
         </div>
 
@@ -74,8 +80,8 @@
             *ngIf="loanTermInput.invalid && (loanTermInput.dirty || loanTermInput.touched)"
             class="alert"
           >
-            <div *ngIf="loanTermInput.errors?.['required']">Loan Term is required.</div>
-            <div *ngIf="loanTermInput.errors?.['pattern']">The value should be between 1 and 30</div>
+            <div class="form-text text-muted" *ngIf="loanTermInput.errors?.['required']">Loan Term is required.</div>
+            <div class="form-text text-muted" *ngIf="loanTermInput.errors?.['pattern']">The value should be between 1 and 30</div>
           </div>
         </div>
 

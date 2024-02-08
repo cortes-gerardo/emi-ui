@@ -14,32 +14,45 @@ import {EmiArguments} from "../shared/model/EmiArguments";
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'emi-ui';
-  items : number[] = [];
-  loanValueText = '';
-  yearlyInterestRateText = '';
-  loanTermText = '';
+  title: string = 'emi-ui';
+  items: number[] = [];
+  loanValueText: string = '';
+  yearlyInterestRateText: string = '';
+  loanTermText: string = '';
+  alertMessage: string = '';
 
   constructor(private emiService: EmiService) {
   }
 
   ngOnInit(): void {
-    this.emiService.getHistory().subscribe((data) => {
-      this.items = data;
+    this.updateHistory();
+  }
+
+  onSubmit(): void {
+    let emiArguments = new EmiArguments(
+      Number(this.loanValueText),
+      Number(this.yearlyInterestRateText),
+      Number(this.loanTermText)
+    );
+
+    this.loanValueText = '';
+    this.yearlyInterestRateText = '';
+    this.loanTermText = '';
+
+    this.emiService.calculate(emiArguments).subscribe({
+      next: (data) => {
+        this.updateHistory()
+      },
+      error: (e) => this.alertMessage = e.message
     });
   }
 
-  onSubmit() {
-    let loanValue = Number(this.loanValueText);
-    let yearlyInterestRate = Number(this.yearlyInterestRateText);
-    let loanTerm = Number(this.loanTermText);
-    console.log(loanValue);
-
-    let emiArguments = new EmiArguments(loanValue, yearlyInterestRate, loanTerm);
-    console.log(emiArguments);
-
-    this.emiService.calculate(emiArguments).subscribe((data) => {
-      console.log(data);
+  private updateHistory() {
+    this.emiService.getHistory().subscribe({
+      next: (data) => {
+        this.items = data
+      },
+      error: (e) => this.alertMessage = e.message
     });
   }
 
