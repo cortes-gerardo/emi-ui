@@ -20,7 +20,8 @@
         <!-- Loan Value -->
         <div class="form-group">
           <label for="inputLoanValue">Loan Value</label>
-          <input class="form-control" id="inputLoanValue" aria-describedby="loanValueHelp" placeholder="Loan Value">
+          <input class="form-control" id="inputLoanValue" aria-describedby="loanValueHelp"
+                 name="loanValueText" placeholder="Loan Value" [(ngModel)]="loanValueText">
           <small id="loanValueHelp" class="form-text text-muted">Amount with two decimals</small>
         </div>
 
@@ -28,14 +29,15 @@
         <div class="form-group">
           <label for="inputYearlyInterestRate">Yearly Interest Rate</label>
           <input class="form-control" id="inputYearlyInterestRate" aria-describedby="yearlyInterestRateHelp"
-                 placeholder="Yearly Interest Rate">
+                 name="yearlyInterestRateText" placeholder="Yearly Interest Rate" [(ngModel)]="yearlyInterestRateText">
           <small id="yearlyInterestRateHelp" class="form-text text-muted">Percentage from 0-100 %</small>
         </div>
 
         <!-- Loan Term -->
         <div class="form-group">
           <label for="inputLoanTerm">Loan Term</label>
-          <input class="form-control" id="inputLoanTerm" aria-describedby="loanTermHelp" placeholder="Loan Term">
+          <input class="form-control" id="inputLoanTerm" aria-describedby="loanTermHelp"
+                 name="loanTermText" placeholder="Loan Term" [(ngModel)]="loanTermText">
           <small id="loanTermHelp" class="form-text text-muted">Up to a maximum of 30 years</small>
         </div>
 
@@ -47,7 +49,7 @@
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
 
-        <button type="submit" class="btn btn-primary">Calculate</button>
+        <button type="submit" class="btn btn-primary" (click)="$event.preventDefault(); calculate()">Calculate</button>
 
       </form>
     </div>
@@ -56,7 +58,7 @@
     <div class="col">
       <h2>History</h2>
       <ul *ngIf="items.length > 0" class="list-group">
-        <li *ngFor="let item of items" class="list-group-item">{{ item.amount }}</li>
+        <li *ngFor="let item of items" class="list-group-item">{{ item }}</li>
       </ul>
     </div>
 

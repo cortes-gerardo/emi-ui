@@ -1,19 +1,37 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {CommonModule} from '@angular/common';
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from '@angular/common/http';
+import {EmiService} from "./emi.service";
+import {EmiArguments} from "../shared/model/EmiArguments";
 import {Result} from "../shared/model/Result";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, FormsModule, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'emi-ui';
-  items : Result[] = [
-    new Result(13598.05),
-    new Result(6585.23)
-  ];
+  items : number[] = [];
+  loanValueText = '';
+  yearlyInterestRateText = '';
+  loanTermText = '';
+
+  constructor(private emiService: EmiService) {
+  }
+
+  ngOnInit(): void {
+    this.emiService.getHistory().subscribe((data) => {
+      this.items = data;
+    })
+  }
+
+  calculate() {
+    new EmiArguments(+this.loanValueText, +this.yearlyInterestRateText, +this.loanTermText)
+  }
+
 }
