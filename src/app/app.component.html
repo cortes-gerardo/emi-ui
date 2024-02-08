@@ -7,7 +7,7 @@
         {{ title }}
       </h1>
 
-      <div *ngIf="alertMessage.length > 0" class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert" *ngIf="alertMessage.length > 0">
         {{ alertMessage }}
       </div>
 
@@ -22,18 +22,30 @@
       <h2>Calculator</h2>
       <form class="needs-validation" novalidate>
 
+        <div class="form-group">
+          <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-lg">Total</span>
+            </div>
+            <input type="text" name="total" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-lg" [(ngModel)]="total" readonly>
+          </div>
+        </div>
+
         <!-- Email address -->
         <div class="form-group">
           <label for="inputEmail">Email address</label>
-          <input class="form-control" id="inputEmail" name="inputEmail"
+          <input class="form-control is-invalid" id="inputEmail" name="inputEmail"
                  placeholder="We'll never share your email with anyone else" aria-describedby="emailHelp"
-                 ngModel #emailInput="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                 ngModel #emailInput="ngModel" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                 [class.is-invalid] = "emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+                 (click)="onClick()">
           <div
             *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
-            class="alert"
+            class="invalid-feedback"
           >
-            <div class="form-text text-muted" *ngIf="emailInput.errors?.['required']">Email is required.</div>
-            <div class="form-text text-muted" *ngIf="emailInput.errors?.['pattern']">Not a valid Email</div>
+            <samp *ngIf="emailInput.errors?.['required']">Email is required.</samp>
+            <samp *ngIf="emailInput.errors?.['pattern']">Not a valid Email</samp>
           </div>
 
         </div>
@@ -41,17 +53,19 @@
         <!-- Loan Value -->
         <div class="form-group">
           <label for="inputLoanValue">Loan Value</label>
-          <input class="form-control" id="inputLoanValue" name="loanValueText"
+          <input class="form-control is-invalid" id="inputLoanValue" name="loanValueText"
                  placeholder="Amount with two decimals" aria-describedby="loanValueHelp"
-                 [(ngModel)]="loanValueText" #loanValueInput="ngModel" required pattern="^(\d*)(\.\d{1,2})?$">
+                 [(ngModel)]="loanValueText" #loanValueInput="ngModel" required pattern="^(\d*)(\.\d{1,2})?$"
+                 [class.is-invalid] = "loanValueInput.invalid && (loanValueInput.dirty || loanValueInput.touched)"
+                 (click)="onClick()">
           <div
             *ngIf="loanValueInput.invalid && (loanValueInput.dirty || loanValueInput.touched)"
-            class="alert"
+            class="invalid-feedback"
           >
-            <div class="form-text text-muted" *ngIf="loanValueInput.errors?.['required']">Loan Value is required.</div>
-            <div class="form-text text-muted" *ngIf="loanValueInput.errors?.['pattern']">This is not a valid number</div>
+            <span *ngIf="loanValueInput.errors?.['required']">Loan Value is required.</span>
+            <span *ngIf="loanValueInput.errors?.['pattern']">This is not a valid number
+            </span>
           </div>
-          <div class="invalid-feedback">Example invalid feedback text</div>
         </div>
 
         <!-- Yearly Interest Rate -->
@@ -60,13 +74,15 @@
           <input class="form-control" id="inputYearlyInterestRate" name="yearlyInterestRateText"
                  placeholder="Percentage from 0-100 %" aria-describedby="yearlyInterestRateHelp"
                  [(ngModel)]="yearlyInterestRateText" #yearlyInterestRateInput="ngModel" required
-                 pattern="^([0-9][0-9]{0,1}|100)(\.\d{1,2})?$">
+                 pattern="^([0-9][0-9]{0,1}|100)(\.\d{1,2})?$"
+                 [class.is-invalid] = "yearlyInterestRateInput.invalid && (yearlyInterestRateInput.dirty || yearlyInterestRateInput.touched)"
+                 (click)="onClick()">
           <div
             *ngIf="yearlyInterestRateInput.invalid && (yearlyInterestRateInput.dirty || yearlyInterestRateInput.touched)"
-            class="alert"
+            class="invalid-feedback"
           >
-            <div class="form-text text-muted" *ngIf="yearlyInterestRateInput.errors?.['required']">Name is required.</div>
-            <div class="form-text text-muted" *ngIf="yearlyInterestRateInput.errors?.['pattern']">The value should be between 0 and 100</div>
+            <span *ngIf="yearlyInterestRateInput.errors?.['required']">Name is required.</span>
+            <span *ngIf="yearlyInterestRateInput.errors?.['pattern']">The value should be between 0 and 100</span>
           </div>
         </div>
 
@@ -75,13 +91,15 @@
           <label for="inputLoanTerm">Loan Term</label>
           <input class="form-control" id="inputLoanTerm" name="loanTermText"
                  placeholder="Up to a maximum of 30 years" aria-describedby="loanTermHelp"
-                 [(ngModel)]="loanTermText" #loanTermInput="ngModel" required pattern="^([1-2]?[0-9]{0,1}|30)$">
+                 [(ngModel)]="loanTermText" #loanTermInput="ngModel" required pattern="^([1-2]?[0-9]{0,1}|30)$"
+                 [class.is-invalid] = "loanTermInput.invalid && (loanTermInput.dirty || loanTermInput.touched)"
+                 (click)="onClick()">
           <div
             *ngIf="loanTermInput.invalid && (loanTermInput.dirty || loanTermInput.touched)"
-            class="alert"
+            class="invalid-feedback"
           >
-            <div class="form-text text-muted" *ngIf="loanTermInput.errors?.['required']">Loan Term is required.</div>
-            <div class="form-text text-muted" *ngIf="loanTermInput.errors?.['pattern']">The value should be between 1 and 30</div>
+            <span *ngIf="loanTermInput.errors?.['required']">Loan Term is required.</span>
+            <span *ngIf="loanTermInput.errors?.['pattern']">The value should be between 1 and 30</span>
           </div>
         </div>
 
@@ -102,6 +120,7 @@
       <ul *ngIf="items.length > 0" class="list-group">
         <li *ngFor="let item of items" class="list-group-item">{{ item }}</li>
       </ul>
+
     </div>
 
   </div>

@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   yearlyInterestRateText: string = '';
   loanTermText: string = '';
   alertMessage: string = '';
+  total: string = '';
 
   constructor(private emiService: EmiService) {
   }
@@ -35,12 +36,9 @@ export class AppComponent implements OnInit {
       Number(this.loanTermText)
     );
 
-    this.loanValueText = '';
-    this.yearlyInterestRateText = '';
-    this.loanTermText = '';
-
     this.emiService.calculate(emiArguments).subscribe({
       next: (data) => {
+        this.total = data.amount.toString();
         this.updateHistory()
       },
       error: (e) => this.alertMessage = e.message
@@ -56,4 +54,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+  onClick(): void {
+    this.alertMessage = '';
+  }
 }

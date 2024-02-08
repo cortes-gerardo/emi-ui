@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, Observable, of, throwError} from "rxjs";
+import {catchError, throwError} from "rxjs";
 import {EmiArguments} from "../shared/model/EmiArguments";
 import {Result} from "../shared/model/Result";
 
