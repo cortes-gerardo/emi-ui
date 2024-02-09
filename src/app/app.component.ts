@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
   private updateHistory() {
     this.emiService.getHistory().subscribe({
       next: (data) => {
-        this.items = data
+        this.items = data.history
       },
       error: (e) => this.alertMessage = e.message
     });

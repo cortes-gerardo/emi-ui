@@ -47,7 +47,15 @@ describe('EmiService', () => {
   it('should call getHistory and return an array of results', () => {
 
     service.getHistory().subscribe((res) => {
-      expect(res).toEqual([1,2,3,4]);
+      expect(res).toEqual({
+        "success": true,
+        "history": [
+          880.55,
+          880.55,
+          121.25,
+          914.74
+        ]
+      });
     });
 
     const req = httpController.expectOne({
@@ -55,7 +63,15 @@ describe('EmiService', () => {
       url: `${url}/v1/calculator/history`,
     });
 
-    req.flush([1,2,3,4]);
+    req.flush({
+      "success": true,
+      "history": [
+        880.55,
+        880.55,
+        121.25,
+        914.74
+      ]
+    });
   });
 
 });

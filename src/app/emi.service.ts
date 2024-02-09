@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, throwError} from "rxjs";
 import {EmiArguments} from "../shared/model/EmiArguments";
 import {Result} from "../shared/model/Result";
+import {Historical} from "../shared/model/Historical";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class EmiService {
 
   getHistory() {
     return this.http
-      .get<number[]>(`${this.url}/v1/calculator/history`)
+      .get<Historical>(`${this.url}/v1/calculator/history`)
       .pipe(catchError(this.handleError));
   }
 
