@@ -1,13 +1,16 @@
 name: Angular CI
+
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
+
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Cache node modules
@@ -21,8 +24,7 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
-      - name: npm install and npm run CI commands
+      - name: Build with NPM
         run: |
           npm i
           npm run test:ci
-          npm run build:ci
