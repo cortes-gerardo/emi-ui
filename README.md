@@ -36,6 +36,16 @@ Run a dev server. Navigate to `http://localhost:4200/`. The application will aut
 $ ng serve
 ```
 
+## Deploy
+You can build a docker image and run it locally by using the following
+```shell
+# builds the image
+$ docker build -t emi-ui .
+
+# runs it locally in port 4200
+$ docker run -d -p 4200:80 emi-ui:latest
+```
+
 ---
 
 # Authors
